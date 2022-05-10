@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "sam-app-jenkins-simple-ec2"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-uj95v5mgiyq9"
+s3_prefix = "sam-app-jenkins-simple-ec2"
+region = "eu-west-3"
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true
+image_repositories = []
