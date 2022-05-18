@@ -14,7 +14,7 @@ pipeline {
         // unstash withPythonEnv('../py-virtual-env/python3.9-venv/bin/python') {'venv'
         // sh 'venv/bin/sam build'
         sh 'sam build'
-        sh 'chmod +x -R ${env.WORKSPACE} && ../py-virtual-env/python3.9-venv/bin/activate && -m pytest tests/unit/test_handler.py'
+        sh "chmod +x -R ${env.WORKSPACE} && ../py-virtual-env/python3.9-venv/bin/activate && -m pytest tests/unit/test_handler.py"
         stash includes: '**/.aws-sam/**/*', name: 'aws-sam'
       }
     }
