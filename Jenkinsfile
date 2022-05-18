@@ -2,19 +2,21 @@ pipeline {
   agent any
 
   stages {
-    stage('setup python env') {
-      steps {
-        sh 'pwd'
-        sh 'source ../py-virtual-env/python3.9-venv/bin/activate'
-        // stash includes: '**/venv/**/*', name: 'venv'
-      }
-    }
+    // stage('setup python env') {
+    //   steps {
+    //     sh 'pwd'
+    //     sh 'source ../py-virtual-env/python3.9-venv/bin/activate'
+    //     // stash includes: '**/venv/**/*', name: 'venv'
+    //   }
+    // }
     stage('Build') {
       steps {
         // unstash 'venv'
         // sh 'venv/bin/sam build'
         sh 'sam build'
+        withPythonEnv('/home/ubuntu/py-virtual-env/python3.9-venv/bin/python') {
         sh 'python -m pytest tests/unit/test_handler.py'
+        }
         stash includes: '**/.aws-sam/**/*', name: 'aws-sam'
       }
     }
@@ -26,7 +28,9 @@ pipeline {
 
           script {
               try {
+                withPythonEnv('/home/ubuntu/py-virtual-env/python3.9-venv/bin/python') {
                 sh 'python -m unittest tests/integration/test_api_gateway.py'
+                }
               }
               catch (Exception e) {
               //if integration failed, no simple way to rolll-back the sam deployment. So, we go to the previous commit (stable version), and redeploy. Then we break the pipeline
