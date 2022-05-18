@@ -14,9 +14,7 @@ pipeline {
         // unstash withPythonEnv('../py-virtual-env/python3.9-venv/bin/python') {'venv'
         // sh 'venv/bin/sam build'
         sh 'sam build'
-        withPythonEnv('python3.9') {
-        sh 'python -m pytest tests/unit/test_handler.py'
-        }
+        sh '../py-virtual-env/python3.9-venv/bin/activate && -m pytest tests/unit/test_handler.py'
         stash includes: '**/.aws-sam/**/*', name: 'aws-sam'
       }
     }
@@ -28,9 +26,7 @@ pipeline {
 
           script {
               try {
-                withPythonEnv('python3.9') {
-                sh 'python -m unittest tests/integration/test_api_gateway.py'
-                }
+                sh '../py-virtual-env/python3.9-venv/bin/activate && python -m unittest tests/integration/test_api_gateway.py'
               }
               catch (Exception e) {
               //if integration failed, no simple way to rolll-back the sam deployment. So, we go to the previous commit (stable version), and redeploy. Then we break the pipeline
