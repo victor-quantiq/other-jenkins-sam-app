@@ -6,7 +6,7 @@ pipeline {
       steps {
         sh 'pwd'
         sh 'source ../py-virtual-env/python3.9-venv/bin/activate'
-        stash includes: '**/venv/**/*', name: 'venv'
+        // stash includes: '**/venv/**/*', name: 'venv'
       }
     }
     stage('Build') {
