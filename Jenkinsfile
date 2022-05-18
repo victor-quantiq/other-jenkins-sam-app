@@ -33,7 +33,7 @@ pipeline {
               try {
                 withPythonEnv('python3.9'){
                 sh '''
-                pip install boto3
+                pip install boto3 requests
                 python -m unittest tests/integration/test_api_gateway.py
                 '''
                 }
