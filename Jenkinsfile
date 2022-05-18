@@ -15,7 +15,7 @@ pipeline {
         // sh 'venv/bin/sam build'
         sh "sam build"
         dir("../"){
-        sh "source py-virtual-env/python3.9-venv/bin/activate && -m pytest tests/unit/test_handler.py"
+        sh "source py-virtual-env/python3.9-venv/bin/activate && python -m pytest test/tests/unit/test_handler.py"
         }
         stash includes: '**/.aws-sam/**/*', name: 'aws-sam'
       }
