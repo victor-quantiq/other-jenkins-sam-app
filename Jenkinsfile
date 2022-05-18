@@ -17,7 +17,7 @@ pipeline {
         withPythonEnv('python3.9'){
         sh '''
         pip install pytest boto3
-        python pytest test/tests/unit/test_handler.py
+        python -m pytest tests/unit/test_handler.py
         '''
         }
         stash includes: '**/.aws-sam/**/*', name: 'aws-sam'
