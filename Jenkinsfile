@@ -31,7 +31,7 @@ pipeline {
 
           script {
               try {
-                withPythonEn('python3.9'){
+                withPythonEnv('python3.9'){
                 sh '''
                 pip install boto3
                 python -m unittest tests/integration/test_api_gateway.py
