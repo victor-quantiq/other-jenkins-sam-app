@@ -11,10 +11,10 @@ pipeline {
     // }
     stage('Build') {
       steps {
-        // unstash 'venv'
+        // unstash withPythonEnv('../py-virtual-env/python3.9-venv/bin/python') {'venv'
         // sh 'venv/bin/sam build'
         sh 'sam build'
-        withPythonEnv('/home/ubuntu/py-virtual-env/python3.9-venv/bin/python') {
+        withPythonEnv('../py-virtual-env/python3.9-venv/bin/python') {
         sh 'python -m pytest tests/unit/test_handler.py'
         }
         stash includes: '**/.aws-sam/**/*', name: 'aws-sam'
@@ -28,7 +28,7 @@ pipeline {
 
           script {
               try {
-                withPythonEnv('/home/ubuntu/py-virtual-env/python3.9-venv/bin/python') {
+                withPythonEnv('../py-virtual-env/python3.9-venv/bin/python') {
                 sh 'python -m unittest tests/integration/test_api_gateway.py'
                 }
               }
