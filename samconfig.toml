@@ -2,7 +2,7 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "sam-app-jenkins-simple-ec2"
+stack_name = "other-sam-app-jenkins"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-uj95v5mgiyq9"
 s3_prefix = "sam-app-jenkins-simple-ec2"
 region = "eu-west-3"
