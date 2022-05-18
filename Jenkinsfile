@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('setup python env') {
       steps {
-        sh 'sudo . /home/ubuntu/py-virtual-env/python3.9/bin/activate'
+        sh '. ~/py-virtual-env/python3.9/bin/activate'
         stash includes: '**/venv/**/*', name: 'venv'
       }
     }
