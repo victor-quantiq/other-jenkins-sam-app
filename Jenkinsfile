@@ -17,8 +17,8 @@ pipeline {
         dir("../"){
         sh '''
         source py-virtual-env/python3.9-venv/bin/activate
-        python --version
-        python -m pytest test/tests/unit/test_handler.py
+        echo $(python --version)
+        python pytest test/tests/unit/test_handler.py
         '''
         }
         stash includes: '**/.aws-sam/**/*', name: 'aws-sam'
