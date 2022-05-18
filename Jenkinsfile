@@ -14,7 +14,7 @@ pipeline {
         // unstash 'venv'
         // sh 'venv/bin/sam build'
         sh 'sam build'
-        sh 'python3.8 -m pytest tests/unit/test_handler.py'
+        sh 'python -m pytest tests/unit/test_handler.py'
         stash includes: '**/.aws-sam/**/*', name: 'aws-sam'
       }
     }
@@ -26,7 +26,7 @@ pipeline {
 
           script {
               try {
-                sh 'python3.8 -m unittest tests/integration/test_api_gateway.py'
+                sh 'python -m unittest tests/integration/test_api_gateway.py'
               }
               catch (Exception e) {
               //if integration failed, no simple way to rolll-back the sam deployment. So, we go to the previous commit (stable version), and redeploy. Then we break the pipeline
