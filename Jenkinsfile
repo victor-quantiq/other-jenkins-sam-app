@@ -14,10 +14,9 @@ pipeline {
         // unstash withPythonEnv('../py-virtual-env/python3.9-venv/bin/python') {'venv'
         // sh 'venv/bin/sam build'
         sh "sam build"
-        dir("../"){
+        withPythonEnv('python3.9'){
         sh '''
-        source py-virtual-env/python3.9-venv/bin/activate
-        echo $(python --version)
+        pip install pytest boto3
         python pytest test/tests/unit/test_handler.py
         '''
         }
@@ -32,7 +31,12 @@ pipeline {
 
           script {
               try {
-                sh '../py-virtual-env/python3.9-venv/bin/activate && python -m unittest tests/integration/test_api_gateway.py'
+                withPythonEn('python3.9'){
+                sh '''
+                pip install boto3
+                python -m unittest tests/integration/test_api_gateway.py
+                '''
+                }
               }
               catch (Exception e) {
               //if integration failed, no simple way to rolll-back the sam deployment. So, we go to the previous commit (stable version), and redeploy. Then we break the pipeline
