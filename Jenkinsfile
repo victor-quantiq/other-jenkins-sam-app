@@ -19,7 +19,7 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        withAWS(credentials: 'sam-jenkins', region: 'eu-west-3') {
+        withAWS(credentials: 'aws-admin-credentials', region: 'eu-west-3') {
           unstash 'aws-sam'
           sh 'sam deploy'
 
