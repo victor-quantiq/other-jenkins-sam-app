@@ -28,7 +28,7 @@ pipeline {
                 sh 'python3.8 -m unittest tests/integration/test_api_gateway.py'
               }
               catch (Exception e) {
-              if integration failed, no simple way to rolll-back the sam deployment. So, we go to the previous commit (stable version), and redeploy. Then we break the pipeline
+              //if integration failed, no simple way to rolll-back the sam deployment. So, we go to the previous commit (stable version), and redeploy. Then we break the pipeline
               sh 'git reset --hard HEAD~1 && sam build --config-env dev && sam deploy --config-env dev && wget --post-data="" $BUILD_URL/stop'
               }
           }
