@@ -14,7 +14,7 @@ pipeline {
         // unstash withPythonEnv('../py-virtual-env/python3.9-venv/bin/python') {'venv'
         // sh 'venv/bin/sam build'
         sh "sam build"
-        sh "echo ${env.BRANCH_NAME}"
+        sh "printenv"
         withPythonEnv('python3.9'){
         sh '''
         pip install pytest boto3
